@@ -214,6 +214,7 @@ LOCAL_SRC_FILES:= \
 	src/core/SkFlate.cpp \
 	src/core/SkWriter32.cpp \
 	src/core/SkXfermode.cpp \
+	src/core/SkRefCnt.cpp \
 	src/doc/SkDocument.cpp \
 	src/doc/SkDocument_PDF.cpp \
 	src/effects/Sk1DPathEffect.cpp \

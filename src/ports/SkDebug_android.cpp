@@ -34,3 +34,6 @@ void SkDebugf(const char format[], ...) {
 
     va_end(args);
 }
+
+extern "C" void _Z16Android_SkDebugfPKciS0_S0_z(const char format[], ...) __attribute__ ((alias("_Z8SkDebugfPKcz")));
+

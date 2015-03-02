@@ -353,9 +353,7 @@ public:
      *  None.
      */
     SK_ATTR_DEPRECATED("use setFilterLevel")
-    void setFilterBitmap(bool doFilter) {
-        this->setFilterLevel(doFilter ? kLow_FilterLevel : kNone_FilterLevel);
-    }
+    void setFilterBitmap(bool doFilter);
 
     /**
      *  Returns true if getFilterLevel() returns anything other than None.

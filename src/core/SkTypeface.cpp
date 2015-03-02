@@ -32,6 +32,10 @@ SkTypeface::~SkTypeface() {
 #endif
 }
 
+extern "C" bool _ZN10SkTypeface13isValidStreamEP8SkStream(SkStream* stream) {
+    return stream != NULL && !stream->isAtEnd();
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 
 class SkEmptyTypeface : public SkTypeface {

@@ -395,6 +395,10 @@ void SkPaint::setHinting(Hinting hintingLevel) {
     fHinting = hintingLevel;
 }
 
+void SkPaint::setFilterBitmap(bool doFilter) {
+    this->setFilterLevel(doFilter ? kLow_FilterLevel : kNone_FilterLevel);
+}
+
 void SkPaint::setFlags(uint32_t flags) {
     GEN_ID_INC_EVAL(fFlags != flags);
     fFlags = flags;

@@ -177,7 +177,7 @@ template<typename T> static inline void SkSafeSetNull(T*& obj) {
 /**
  *  Utility class that simply unref's its argument in the destructor.
  */
-template <typename T> class SkAutoTUnref : SkNoncopyable {
+template <typename T> class SK_API SkAutoTUnref : SkNoncopyable {
 public:
     explicit SkAutoTUnref(T* obj = NULL) : fObj(obj) {}
     ~SkAutoTUnref() { SkSafeUnref(fObj); }
@@ -239,13 +239,34 @@ private:
 };
 // Can't use the #define trick below to guard a bare SkAutoTUnref(...) because it's templated. :(
 
-class SkAutoUnref : public SkAutoTUnref<SkRefCnt> {
+class SK_API SkAutoUnref : SkNoncopyable {
 public:
-    SkAutoUnref(SkRefCnt* obj) : SkAutoTUnref<SkRefCnt>(obj) {}
-};
-#define SkAutoUnref(...) SK_REQUIRE_LOCAL_VAR(SkAutoUnref)
+    SkAutoUnref(SkRefCnt* obj) : fObj(obj) {}
+    ~SkAutoUnref();
 
-class SkAutoRef : SkNoncopyable {
+    SkRefCnt* get() const { return fObj; }
+
+    /** If the hosted object is null, do nothing and return false, else call
+        ref() on it and return true
+    */
+    bool ref();
+
+    /** If the hosted object is null, do nothing and return false, else call
+        unref() on it, set its reference to null, and return true
+    */
+    bool unref();
+
+    /** If the hosted object is null, do nothing and return NULL, else call
+        unref() on it, set its reference to null, and return the object
+    */
+    SkRefCnt* detach();
+
+private:
+    SkRefCnt* fObj;
+};
+//#define SkAutoUnref(...) SK_REQUIRE_LOCAL_VAR(SkAutoUnref)
+
+class SK_API SkAutoRef : SkNoncopyable {
 public:
     SkAutoRef(SkRefCnt* obj) : fObj(obj) { SkSafeRef(obj); }
     ~SkAutoRef() { SkSafeUnref(fObj); }
